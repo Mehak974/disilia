@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-20 p-8 glass-nav rounded-xl border border-gold/20 relative shadow-2xl">
+    <div class="absolute inset-0 bg-gradient-to-br from-gold/10 to-transparent rounded-xl pointer-events-none"></div>
+    <div class="relative z-10">
+        <h2 class="text-3xl font-light text-charcoal mb-6 uppercase tracking-widest text-center">Welcome Back</h2>
+        
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+            <div>
+                <label for="username" class="block text-sm font-medium text-muted mb-2">Username or Email</label>
+                <input type="text" id="username" name="username" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold transition-colors" required>
+            </div>
+            
+            <div>
+                <label for="password" class="block text-sm font-medium text-muted mb-2">Password</label>
+                <input type="password" id="password" name="password" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold transition-colors" required>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 bg-parchment border-gray-700 rounded text-gold focus:ring-gold">
+                    <label for="remember-me" class="ml-2 block text-sm text-muted">Remember me</label>
+                </div>
+                <div class="text-sm">
+                    <a href="#" class="font-medium text-gold hover:text-yellow-400">Forgot password?</a>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-charcoal bg-gold hover:bg-yellow-500 transition-colors uppercase tracking-widest">
+                Sign in
+            </button>
+        </form>
+        
+        <p class="mt-6 text-center text-sm text-muted">
+            Don't have an account? 
+            <a href="{% url 'users:signup' %}" class="font-medium text-gold hover:text-yellow-400">Sign up</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

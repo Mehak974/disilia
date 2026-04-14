@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pb-24">
+    <div class="mb-12 border-b border-gold/20 pb-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-charcoal uppercase tracking-widest flex items-center gap-4">
+            {% if category %}
+                <span class="text-5xl">{{ category.emoji }}</span>
+                {{ category.name }}
+            {% else %}
+                All Products
+            {% endif %}
+        </h1>
+        <p class="text-xl text-muted mt-4 max-w-2xl leading-relaxed">
+            {% if category %}
+                {% if category.tagline and category.tagline != category.description %}
+                    <span class="text-gold font-bold block text-sm uppercase tracking-[0.2em] mb-2">{{ category.tagline }}</span>
+                {% endif %}
+                {{ category.description }}
+            {% else %}
+                Discover our full curated curation of excellence.
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-10">
+        <!-- Sidebar Filters -->
+        <div class="w-full md:w-64 flex-shrink-0">
+            <h3 class="text-lg font-semibold text-charcoal mb-4 uppercase tracking-wide">Categories</h3>
+            <ul class="space-y-3">
+                <li>
+                    <a href="{% url 'store:catalog_all' %}" class="{% if not category %}text-gold font-bold{% else %}text-muted hover:text-charcoal{% endif %} transition-colors">All Categories</a>
+                </li>
+                {% for cat in all_categories %}
+                <li>
+                    <a href="{% url 'store:catalog_category' cat.slug %}" class="{% if category.id == cat.id %}text-gold font-bold{% else %}text-muted hover:text-charcoal{% endif %} transition-colors flex items-center gap-2">
+                        <span class="text-sm">{{ cat.emoji }}</span>
+                        {{ cat.name }}
+                    </a>
+                    {% if category.id == cat.id and cat.subcategories.exists %}
+                    <ul class="ml-4 mt-2 space-y-2 border-l border-gold/20 pl-4">
+                        {% for sub in cat.subcategories.all %}
+                        <li><a href="?sub={{ sub.slug }}" class="text-sm text-muted hover:text-gold transition-colors">{{ sub.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="flex-1">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for product in products %}
+                <a href="{{ product.get_absolute_url }}" class="group block glass-nav border border-gold/20 rounded transition-all hover:border-gold p-4 relative">
+                    <div class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-parchment rounded mb-4 flex items-center justify-center p-8 relative">
+                        <!-- Immersive Image Placeholder -->
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="object-center object-cover group-hover:scale-105 transition-transform duration-500">
+                        {% else %}
+                        <div class="text-4xl opacity-50 group-hover:scale-110 transition-transform duration-500">✨</div>
+                        {% endif %}
+                        <div class="absolute inset-0 bg-gold/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs text-gold uppercase tracking-wider mb-1">{{ product.subcategory.name }}</p>
+                            <h3 class="text-lg text-charcoal font-light group-hover:text-gold transition-colors">{{ product.name }}</h3>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center justify-between">
+                        <p class="text-xl font-medium text-charcoal">${{ product.price }}</p>
+                        <button class="w-10 h-10 border border-gray-600 rounded-full flex items-center justify-center hover:bg-gold hover:text-charcoal hover:border-gold transition-colors">
+                            +
+                        </button>
+                    </div>
+                </a>
+                {% empty %}
+                <div class="col-span-full py-20 text-center border border-dashed border-gold/20 rounded">
+                    <p class="text-muted">No products found in this category.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

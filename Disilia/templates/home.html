@@ -1,0 +1,371 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ════════════════════════════════════════════════════════
+     HERO – left: content | right: 5 linear gradient shapes
+═════════════════════════════════════════════════════════════ -->
+<section class="relative w-full overflow-hidden">
+
+    <!-- Background gradient -->
+    <div class="absolute inset-0 z-0" style="background:linear-gradient(135deg,#ede8df 0%,#faf7f3 50%,#e6dfd5 100%);">
+    </div>
+
+    <!-- Background Watermark -->
+    <div class="watermark" style="top: 10%; right: -5%;">DISILIA</div>
+
+    <!-- Soft blob accents -->
+    <div class="absolute top-[-60px] left-[-60px] w-80 h-80 rounded-full z-0 pointer-events-none opacity-30"
+        style="background:radial-gradient(circle,#c9873c55,transparent 70%);"></div>
+    <div class="absolute bottom-[-40px] right-0 w-72 h-72 rounded-full z-0 pointer-events-none opacity-20"
+        style="background:radial-gradient(circle,#6366f155,transparent 70%);"></div>
+
+    <!-- Two-column grid -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex flex-col lg:flex-row items-center py-20 lg:py-24">
+
+        <!-- ── LEFT: Hero text ──────────────────────────── -->
+        <div class="w-full lg:w-[70%] flex flex-col justify-center py-10 lg:py-0 pr-0 lg:pr-12">
+
+            <p class="hero-subtext text-xs font-bold uppercase tracking-[0.3em] text-gold mb-5">
+                New Collection · 2025
+            </p>
+
+            <h1
+                class="hero-text text-5xl md:text-6xl xl:text-[5.2rem] font-extrabold leading-[1.07] tracking-tight text-charcoal mb-6">
+                Discover<br />
+                the&nbsp;<em class="text-gold font-light">Extra&shy;ordinary</em>
+            </h1>
+
+            <p class="text-base md:text-lg text-muted max-w-md mb-6 leading-relaxed">
+                From essential daily supplements to premium home décor — curate your perfect lifestyle with Disilia.
+            </p>
+
+            <div class="hero-buttons flex flex-wrap gap-4">
+                <a href="{% url 'store:catalog_all' %}" id="btn-shop"
+                    class="inline-flex items-center gap-2 px-8 py-4 bg-gold text-white font-bold uppercase tracking-wider text-sm hover:bg-goldDark transition-all duration-200 shadow-lg hover:shadow-xl">
+                    Shop Collection
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#categories" id="btn-explore"
+                    class="inline-flex items-center gap-2 px-8 py-4 border-2 border-charcoal/25 text-charcoal font-bold uppercase tracking-wider text-sm hover:border-gold hover:text-gold transition-all duration-200">
+                    Explore Categories
+                </a>
+            </div>
+
+            <!-- Trust badges -->
+            <div class="mt-8 flex flex-wrap items-center gap-8 text-xs text-muted uppercase tracking-widest">
+                <span class="flex items-center gap-2"><span class="text-gold text-base">✓</span> Free Shipping</span>
+                <span class="flex items-center gap-2"><span class="text-gold text-base">✓</span> Easy Returns</span>
+                <span class="flex items-center gap-2"><span class="text-gold text-base">★</span> 5-Star Rated</span>
+            </div>
+        </div>
+
+        <!-- ── RIGHT: Canvas ────────────────────────────── -->
+        <div class="w-full lg:w-[30%] flex items-center justify-center" style="min-height:320px;">
+            <canvas id="hero-canvas" style="width:100%;height:100%;max-height:420px;display:block;"></canvas>
+        </div>
+
+    </div>
+
+    <!-- Liquid SVG Divider (Bottom) - Upside Down -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20">
+        <svg class="relative block w-[calc(100%+1.3px)] h-[120px]" viewBox="0 0 1200 120" preserveAspectRatio="none" style="transform: scaleY(-1);">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-32.82C939.75,34.4,1066.83,3.17,1200,61V0Z" style="fill:#ede8df; opacity:.6;"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5V0Z" style="fill:#ede8df; opacity:.3;"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.46C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" style="fill:#f8f5f0;"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- ════════════════ CATEGORIES ═════════════════════════════ -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="categories">
+    <div class="flex items-end justify-between mb-10">
+        <div>
+            <h2 class="text-3xl font-light text-charcoal">Shop by <span class="text-gold italic">Category</span></h2>
+            <div class="w-16 h-1 bg-gold mt-4"></div>
+        </div>
+        <a href="{% url 'store:catalog_all' %}"
+           class="text-gold hover:text-goldDark uppercase text-sm tracking-widest border-b border-transparent hover:border-gold transition-all ml-4">View All →</a>
+    </div>
+
+    <div class="stagger-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8">
+
+        <!-- Supplements -->
+        <a href="{% url 'store:supplements' %}"
+           class="float-rise group flex flex-col items-center gap-3 p-5 border border-gold/20 bg-white hover:border-gold transition-all rounded-sm text-center shadow-sm">
+            <span class="text-3xl">💊</span>
+            <span class="text-xs font-semibold uppercase tracking-widest text-charcoal group-hover:text-gold transition-colors">Supplements</span>
+        </a>
+
+        <!-- Pet Care -->
+        <a href="{% url 'store:pet_care' %}"
+           class="float-rise group flex flex-col items-center gap-3 p-5 border border-gold/20 bg-white hover:border-gold transition-all rounded-sm text-center shadow-sm">
+            <span class="text-3xl">🐾</span>
+            <span class="text-xs font-semibold uppercase tracking-widest text-charcoal group-hover:text-gold transition-colors">Pet Care</span>
+        </a>
+
+        <!-- Home & Garden -->
+        <a href="{% url 'store:home_garden' %}"
+           class="float-rise group flex flex-col items-center gap-3 p-5 border border-gold/20 bg-white hover:border-gold transition-all rounded-sm text-center shadow-sm">
+            <span class="text-3xl">🏡</span>
+            <span class="text-xs font-semibold uppercase tracking-widest text-charcoal group-hover:text-gold transition-colors">Home &amp; Garden</span>
+        </a>
+
+        <!-- Beauty -->
+        <a href="{% url 'store:beauty' %}"
+           class="float-rise group flex flex-col items-center gap-3 p-5 border border-gold/20 bg-white hover:border-gold transition-all rounded-sm text-center shadow-sm">
+            <span class="text-3xl">✨</span>
+            <span class="text-xs font-semibold uppercase tracking-widest text-charcoal group-hover:text-gold transition-colors">Beauty</span>
+        </a>
+
+        <!-- Tools -->
+        <a href="{% url 'store:tools' %}"
+           class="float-rise group flex flex-col items-center gap-3 p-5 border border-gold/20 bg-white hover:border-gold transition-all rounded-sm text-center shadow-sm">
+            <span class="text-3xl">🔧</span>
+            <span class="text-xs font-semibold uppercase tracking-widest text-charcoal group-hover:text-gold transition-colors">Tools</span>
+        </a>
+
+        <!-- Toys -->
+        <a href="{% url 'store:toys' %}"
+           class="float-rise group flex flex-col items-center gap-3 p-5 border border-gold/20 bg-white hover:border-gold transition-all rounded-sm text-center shadow-sm">
+            <span class="text-3xl">🧸</span>
+            <span class="text-xs font-semibold uppercase tracking-widest text-charcoal group-hover:text-gold transition-colors">Toys</span>
+        </a>
+
+    </div>
+</div>
+
+
+<section class="relative pt-32 pb-24 overflow-hidden" id="featured" style="background:#121214;">
+    <!-- Sharp Sliced Top Divider (Left to Right) -->
+    <div class="absolute top-0 left-0 w-full h-[100px] bg-[#f8f5f0] z-20" 
+         style="clip-path: polygon(0 0, 100% 0, 100% 100%);">
+    </div>
+
+    <div class="watermark" style="bottom: 15%; left: -2%; color: rgba(255,255,255,0.015);">ELITE</div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="flex items-end justify-between mb-12">
+            <div>
+                <p class="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-3">Top Selection</p>
+                <h2 class="text-3xl font-light text-white">The <span class="text-gold italic">Elite</span> Collection</h2>
+                <div class="w-16 h-1 bg-gold mt-4"></div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="carousel-prev" aria-label="Previous"
+                        class="w-12 h-12 flex items-center justify-center border border-white/20 text-white hover:border-gold hover:text-gold transition-all backdrop-blur-sm">
+                    ←
+                </button>
+                <button id="carousel-next" aria-label="Next"
+                        class="w-12 h-12 flex items-center justify-center border border-white/20 text-white hover:border-gold hover:text-gold transition-all backdrop-blur-sm">
+                    →
+                </button>
+            </div>
+        </div>
+
+    <!-- Carousel track -->
+    <div class="relative overflow-hidden">
+        <div id="carousel-track"
+             class="flex gap-6 transition-transform duration-500 ease-in-out"
+             style="will-change:transform;">
+
+            {% for product in featured_products %}
+            <a href="{% url 'store:product_detail' product.subcategory.category.slug product.slug %}"
+               class="float-rise group flex-shrink-0 w-[calc(25%-18px)] bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all duration-300 block"
+               style="min-width:260px;">
+                <div class="relative overflow-hidden h-60 bg-white/5">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center text-5xl text-white/10">🛍️</div>
+                    {% endif %}
+                    <span class="absolute top-4 left-4 bg-gold text-white text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 shadow-xl">New Arrival</span>
+                </div>
+                <div class="p-6">
+                    <p class="text-[9px] uppercase tracking-[0.2em] text-gold font-bold mb-2">{{ product.subcategory.category.name }}</p>
+                    <h3 class="text-sm font-medium text-white group-hover:text-gold transition-colors leading-relaxed mb-4 line-clamp-2">{{ product.name }}</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-white font-bold text-lg">${{ product.price }}</span>
+                        <span class="text-[9px] uppercase tracking-widest bg-gold/10 text-gold border border-gold/20 px-4 py-2 hover:bg-gold hover:text-white transition-all">Select</span>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            {% for i in "12345678" %}
+            <div class="flex-shrink-0 border border-gold/15 bg-parchment" style="min-width:260px;">
+                <div class="h-52 bg-cream flex items-center justify-center text-4xl text-muted/20">🛍️</div>
+                <div class="p-5">
+                    <div class="h-2 w-14 bg-muted/15 rounded mb-2"></div>
+                    <div class="h-3 w-36 bg-muted/15 rounded mb-4"></div>
+                    <div class="flex justify-between">
+                        <div class="h-4 w-12 bg-gold/25 rounded"></div>
+                        <div class="h-3 w-14 bg-muted/10 rounded"></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+<!-- ════════════════ WHY CHOOSE US ══════════════════════════════ -->
+<section class="bg-parchment py-16" id="why-us">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-light text-charcoal">Why <span class="text-gold italic">Disilia</span>?</h2>
+            <div class="w-16 h-1 bg-gold mx-auto mt-4"></div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="flex flex-col items-center text-center group">
+                <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-2xl mb-5 group-hover:bg-gold/20 transition-colors">🌿</div>
+                <h3 class="font-semibold text-charcoal uppercase tracking-wider text-sm mb-2">Natural & Ethical</h3>
+                <p class="text-muted text-sm leading-relaxed">Every product is vetted for quality, sustainability and ethical sourcing.</p>
+            </div>
+            <div class="flex flex-col items-center text-center group">
+                <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-2xl mb-5 group-hover:bg-gold/20 transition-colors">🚚</div>
+                <h3 class="font-semibold text-charcoal uppercase tracking-wider text-sm mb-2">Free Fast Shipping</h3>
+                <p class="text-muted text-sm leading-relaxed">Free delivery on all orders over $40. Delivered within 2–5 business days.</p>
+            </div>
+            <div class="flex flex-col items-center text-center group">
+                <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-2xl mb-5 group-hover:bg-gold/20 transition-colors">🔄</div>
+                <h3 class="font-semibold text-charcoal uppercase tracking-wider text-sm mb-2">Hassle-Free Returns</h3>
+                <p class="text-muted text-sm leading-relaxed">Changed your mind? Return any unused item within 30 days, no questions asked.</p>
+            </div>
+            <div class="flex flex-col items-center text-center group">
+                <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-2xl mb-5 group-hover:bg-gold/20 transition-colors">⭐</div>
+                <h3 class="font-semibold text-charcoal uppercase tracking-wider text-sm mb-2">5-Star Community</h3>
+                <p class="text-muted text-sm leading-relaxed">Join 50,000+ happy customers who trust Disilia for their everyday essentials.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════ SECOND HERO / PROMO BANNER ══════════════════ -->
+<section class="relative overflow-hidden py-32" style="background:linear-gradient(135deg,#1c1c1e 0%,#2c2418 60%,#3a2e1a 100%);">
+    <!-- Diagonal Slice Top (Left to Right) -->
+    <div class="absolute top-0 left-0 w-full h-[80px] bg-parchment z-20" 
+         style="clip-path: polygon(0 0, 100% 0, 100% 100%);">
+    </div>
+
+    <div class="absolute inset-0 opacity-10 pointer-events-none"
+         style="background:radial-gradient(ellipse at 70% 50%,#c9873c,transparent 65%);"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
+        <div class="flex-1">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-gold mb-4">Limited Time Offer</p>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-5">
+                Up to <span class="text-gold">30% Off</span><br>Your First Order
+            </h2>
+            <p class="text-gray-300 max-w-md mb-8 leading-relaxed">
+                New to Disilia? Use code <span class="text-gold font-bold">WELCOME30</span> at checkout and enjoy 30% off your entire first order.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="{% url 'store:catalog_all' %}"
+                   class="inline-flex items-center gap-2 px-8 py-4 bg-gold text-white font-bold uppercase tracking-wider text-sm hover:bg-goldDark transition-all shadow-lg">
+                    Claim Offer →
+                </a>
+                <a href="{% url 'store:catalog_all' %}"
+                   class="inline-flex items-center gap-2 px-8 py-4 border border-white/20 text-white font-bold uppercase tracking-wider text-sm hover:border-gold hover:text-gold transition-all">
+                    Browse All
+                </a>
+            </div>
+        </div>
+        <div class="flex-shrink-0 hidden lg:grid grid-cols-2 gap-4 w-72">
+            <div class="bg-white/5 border border-white/10 p-6 text-center rounded-sm">
+                <div class="text-3xl font-extrabold text-gold">50K+</div>
+                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Customers</div>
+            </div>
+            <div class="bg-white/5 border border-white/10 p-6 text-center rounded-sm">
+                <div class="text-3xl font-extrabold text-gold">500+</div>
+                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Products</div>
+            </div>
+            <div class="bg-white/5 border border-white/10 p-6 text-center rounded-sm">
+                <div class="text-3xl font-extrabold text-gold">4.9★</div>
+                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Rating</div>
+            </div>
+            <div class="bg-white/5 border border-white/10 p-6 text-center rounded-sm">
+                <div class="text-3xl font-extrabold text-gold">30</div>
+                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Day Returns</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Liquid SVG Divider (Bottom) - Upside Down -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20">
+        <svg class="relative block w-[calc(100%+1.3px)] h-[80px]" viewBox="0 0 1200 120" preserveAspectRatio="none" style="transform: scaleY(-1);">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-32.82C939.75,34.4,1066.83,3.17,1200,61V0Z" style="fill:#ede8df; opacity:.6;"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.46C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" style="fill:#f8f5f0;"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- ════════════════ TESTIMONIALS ════════════════════════════════ -->
+<section class="py-24 relative overflow-hidden" id="testimonials" style="background: linear-gradient(to bottom, #f8f5f0, #ede8df);">
+    <div class="disilia-glow top-0 left-0"></div>
+    <div class="watermark" style="top: 20%; right: -5%; opacity: 0.02;">KUDOS</div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <p class="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-3">Community Love</p>
+            <h2 class="text-3xl font-light text-charcoal">Voice of our <span class="text-gold italic">Patrons</span></h2>
+            <div class="w-16 h-1 bg-gold mx-auto mt-4"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <div class="float-rise bg-white/40 backdrop-blur-sm border border-gold/10 p-10 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-gold/30"></div>
+                <div class="text-gold text-5xl leading-none mb-6 opacity-30 italic serif">"</div>
+                <p class="text-muted text-sm leading-relaxed mb-8 italic">
+                    The Magnesium Glycinate changed my sleep quality completely. I've tried so many brands — Disilia's quality is on another level. Will never shop anywhere else.
+                </p>
+                <div class="flex items-center gap-4 mt-auto">
+                    <div class="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center font-bold text-gold text-sm bg-gold/5 shadow-inner">SR</div>
+                    <div>
+                        <div class="text-sm font-bold text-charcoal tracking-wide">Sarah R.</div>
+                        <div class="text-[10px] uppercase tracking-widest text-muted">Health Enthusiast</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="float-rise bg-white/40 backdrop-blur-sm border border-gold/10 p-10 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-gold/30"></div>
+                <div class="text-gold text-5xl leading-none mb-6 opacity-30 italic serif">"</div>
+                <p class="text-muted text-sm leading-relaxed mb-8 italic">
+                    Ordered the Self-Cleaning Litter Box for my cats. It arrived in 3 days, perfectly packed. My cats love it and so do I — no more scooping! Delivery was impressively fast.
+                </p>
+                <div class="flex items-center gap-4 mt-auto">
+                    <div class="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center font-bold text-gold text-sm bg-gold/5 shadow-inner">JM</div>
+                    <div>
+                        <div class="text-sm font-bold text-charcoal tracking-wide">James M.</div>
+                        <div class="text-[10px] uppercase tracking-widest text-muted">Pet Parent</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="float-rise bg-white/40 backdrop-blur-sm border border-gold/10 p-10 relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-gold/30"></div>
+                <div class="text-gold text-5xl leading-none mb-6 opacity-30 italic serif">"</div>
+                <p class="text-muted text-sm leading-relaxed mb-8 italic">
+                    Bought the Handwoven Jute Rug and it transformed my living room. The quality is premium — I get compliments on it every time guests visit. Disilia has a customer for life.
+                </p>
+                <div class="flex items-center gap-4 mt-auto">
+                    <div class="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center font-bold text-gold text-sm bg-gold/5 shadow-inner">AL</div>
+                    <div>
+                        <div class="text-sm font-bold text-charcoal tracking-wide">Amara L.</div>
+                        <div class="text-[10px] uppercase tracking-widest text-muted">Interior Designer</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/hero_animation.js' %}"></script>
+{% endblock %}

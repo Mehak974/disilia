@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="relative overflow-hidden bg-cream pt-20 pb-32">
+    <!-- Branding Watermark -->
+    <div class="watermark" style="top: 5%; left: 2%; opacity: 0.02; font-size: 20vw;">IDENTITY</div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="mb-20 text-center reveal-up">
+            <h1 class="text-5xl font-light text-charcoal mb-4 uppercase tracking-widest">Identity <span class="text-gold italic">Nodes</span></h1>
+            <p class="text-gold text-xs font-bold uppercase tracking-[0.4em]">The Disilia Cookie Manifesto</p>
+            <div class="w-24 h-px bg-gold mx-auto mt-8 opacity-40"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-16 items-start">
+            <!-- Sticky Sidebar Navigation -->
+            <aside class="hidden lg:block sticky top-32 space-y-6 reveal-up">
+                <nav class="space-y-4">
+                    <p class="text-[10px] uppercase tracking-[0.3em] text-gold font-bold mb-6">Framework</p>
+                    <ul class="space-y-4 text-[10px] uppercase tracking-widest text-muted">
+                        <li><a href="#node1" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">01 Node Genesis</a></li>
+                        <li><a href="#node2" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">02 Essential Nodes</a></li>
+                        <li><a href="#node3" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">03 Performance Metrics</a></li>
+                        <li><a href="#node4" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">04 Curation Preferences</a></li>
+                        <li><a href="#node5" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">05 Targeted Ambition</a></li>
+                        <li><a href="#node6" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">06 Sovereignty Control</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3 space-y-20 reveal-up">
+                <div id="node1" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">01. Node Genesis</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>To provide the high-fidelity experiences expected of Disilia House, we utilize 'Identity Nodes' (commonly referred to as cookies). These are precision data packets stored on your device that allow our systems to recognize your preferences and maintain your place within our digital ecosystem.</p>
+                    </div>
+                </div>
+
+                <div id="node2" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">02. Essential Nodes</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>These nodes are non-negotiable for the operation of the Disilia boutique. They facilitate secure authentication, maintain your 3D shopping bag consistency, and ensure that our 'Zero-Breach' security protocols remain active during your session.</p>
+                    </div>
+                </div>
+
+                <div id="node3" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">03. Performance Metrics</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>We utilize performance nodes to audit the architectural efficiency of our platform. These nodes collect anonymized data on how our patrons interact with our 3D interfaces and category catalogs, allowing us to refine the Disilia experience for maximum fluiduty.</p>
+                    </div>
+                </div>
+
+                <div id="node4" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">04. Curation Preferences</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>To deliver 'Extra' from essentials, functional nodes remember your regional settings, language choices, and previous curation filters. This ensures that every visit to the Disilia House feels tailored to your specific aesthetic and lifestyle requirements.</p>
+                    </div>
+                </div>
+
+                <div id="node5" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">05. Targeted Ambition</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>Disilia partners with select marketing artisans to present curated advertisements that align with your demonstrated interests. These nodes track your journey across Disilia to ensure that the communications you receive are relevant, high-fidelity, and never intrusive.</p>
+                    </div>
+                </div>
+
+                <div id="node6" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">06. Sovereignty Control</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>You maintain ultimate sovereignty over your digital nodes. You may manage, restrict, or purge these nodes through your browser settings or via our 'Executive Privacy Controls.' Note that disabling essential nodes may compromise the immersive functionality of the Disilia platform.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

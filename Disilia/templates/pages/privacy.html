@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="relative overflow-hidden bg-cream pt-20 pb-32">
+    <!-- Branding Watermark -->
+    <div class="watermark" style="top: 5%; left: 2%; opacity: 0.02; font-size: 20vw;">IDENTITY</div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="mb-20 text-center reveal-up">
+            <h1 class="text-5xl font-light text-charcoal mb-4 uppercase tracking-widest">Privacy <span class="text-gold italic">Manifesto</span></h1>
+            <p class="text-gold text-xs font-bold uppercase tracking-[0.4em]">Effective Date: April 13, 2026</p>
+            <div class="w-24 h-px bg-gold mx-auto mt-8 opacity-40"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-16 items-start">
+            <!-- Sticky Sidebar Navigation -->
+            <aside class="hidden lg:block sticky top-32 space-y-6 reveal-up">
+                <nav class="space-y-4">
+                    <p class="text-[10px] uppercase tracking-[0.3em] text-gold font-bold mb-6">Clauses</p>
+                    <ul class="space-y-4 text-[10px] uppercase tracking-widest text-muted">
+                        <li><a href="#intro" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">01 Introduction</a></li>
+                        <li><a href="#sovereignty" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">02 Sovereignty</a></li>
+                        <li><a href="#nodes" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">03 Data Nodes</a></li>
+                        <li><a href="#usage" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">04 Strategic Usage</a></li>
+                        <li><a href="#portability" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">05 Global Portability</a></li>
+                        <li><a href="#protocols" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">06 Protocols</a></li>
+                        <li><a href="#rights" class="hover:text-gold transition-colors block border-l border-gold/10 pl-4 py-1">07 Executive Rights</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3 space-y-20 reveal-up">
+                <div id="intro" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">01. Introduction</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>At Disilia House, we believe that privacy is not merely a legal requirement; it is a fundamental pillar of luxury. Your trust is our most valuable asset. This Privacy Manifesto outlines how we protect and respect your digital identity as you interact with our curated ecosystem.</p>
+                        <p>This policy applies to all platforms operated under the Disilia brand, ensuring that our commitment to excellence extends from the physical products we curate to the data safeguards we implement.</p>
+                    </div>
+                </div>
+
+                <div id="sovereignty" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">02. Data Sovereignty</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>We maintain the principle of Identity Sovereignty. You remain the sole owner of your personal information. We operate as custodians, ensuring that your data remains secure, uncompromised, and used exclusively to enhance your Disilia experience.</p>
+                    </div>
+                </div>
+
+                <div id="nodes" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">03. Collected Data Nodes</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>To provide a bespoke commerce experience, we collect specific data points during your journey:</p>
+                        <ul class="list-none space-y-4">
+                            <li class="flex items-start gap-4"><span class="text-gold font-bold">A.</span> <span><strong class="text-charcoal uppercase text-sm">Identity Attributes:</strong> Full name, executive address for logistics, and authenticated digital contact methods.</span></li>
+                            <li class="flex items-start gap-4"><span class="text-gold font-bold">B.</span> <span><strong class="text-charcoal uppercase text-sm">Transaction Logs:</strong> Historical curation preferences, acquisition history, and preferred settlement methods.</span></li>
+                            <li class="flex items-start gap-4"><span class="text-gold font-bold">C.</span> <span><strong class="text-charcoal uppercase text-sm">Digital Footprints:</strong> Interaction patterns on our 3D interfaces and category-specific interest nodes.</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="usage" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">04. Strategic Usage</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>The processing of your data is governed by strict utility guidelines:</p>
+                        <ul class="list-none space-y-4">
+                            <li><strong class="text-charcoal font-medium">Bespoke Personalization:</strong> Adapting our catalog to show the products most relevant to your lifestyle.</li>
+                            <li><strong class="text-charcoal font-medium">Secure Logistics:</strong> Ensuring your orders are delivered to your precise location with absolute reliability.</li>
+                            <li><strong class="text-charcoal font-medium">Identity Protection:</strong> Using advanced analytics to prevent unauthorized access to your account.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="portability" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">05. Global Portability</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>Our infrastructure is built for the global vision. We adhere to international data regulations, including the GDPR (EU) and CCPA (US), ensuring that your rights are universal regardless of your geographical location.</p>
+                    </div>
+                </div>
+
+                <div id="protocols" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">06. Security Protocols</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>Disilia employs military-grade encryption for all sensitive data transfers. Our servers are housed in Tier-4 data centers, monitored 24/7 by our security executive team. We conduct regular external audits to ensure our 'Zero-Breach' standard is maintained.</p>
+                    </div>
+                </div>
+
+                <div id="rights" class="scroll-mt-32">
+                    <h2 class="text-2xl font-light text-charcoal mb-8 uppercase tracking-widest border-b border-gold/10 pb-4">07. Executive Rights</h2>
+                    <div class="space-y-6 text-muted text-lg leading-relaxed">
+                        <p>Under our manifesto, you possess the right to:</p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li>Request a complete transcript of your data nodes.</li>
+                            <li>Rectify any inaccuracies in your identity file.</li>
+                            <li>Invoke the 'Right to Oblivion' (Complete deletion of your digital profile).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

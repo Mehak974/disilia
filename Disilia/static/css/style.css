@@ -1,0 +1,116 @@
+/* 
+ * Disilia – Core Styles
+ * Consolidated from base.html and category_base.html
+ */
+
+* {
+    /* cursor: default; */
+}
+
+body {
+    background-color: #f8f5f0;
+    color: #1c1c1e;
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* ── Staggered Grid Utility ── */
+.stagger-grid {
+    padding-bottom: 0px;
+}
+.stagger-grid > *:nth-child(even) {
+    transform: translateY(0px);
+}
+@media (min-width: 1024px) {
+    .stagger-grid > *:nth-child(even) {
+        transform: translateY(0px);
+    }
+}
+
+/* ── Grain Texture Overlay ── */
+.grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000;
+    opacity: 0.025;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+}
+
+/* ── Float-Rise Hover ── */
+.float-rise {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.float-rise:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 60px -12px rgba(28, 28, 30, 0.18), 0 18px 36px -18px rgba(28, 28, 30, 0.25);
+    border-color: #c9873c;
+}
+
+/* ── Section Glows ── */
+.disilia-glow {
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, rgba(201, 135, 60, 0.1), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(40px);
+}
+
+/* ── Typography Watermarks ── */
+.watermark {
+    position: absolute;
+    font-size: 22vw;
+    font-weight: 800;
+    color: rgba(28, 28, 30, 0.035);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    white-space: nowrap;
+}
+
+
+/* ── 3D Canvas Background ── */
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+/* ── Navigation ── */
+.glass-nav {
+    background: rgba(248, 245, 240, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201, 135, 60, 0.15);
+}
+
+.glass-nav-shrunken {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background: rgba(248, 245, 240, 0.95);
+}
+
+/* ── Transitions ── */
+a {
+    transition: color 0.2s ease;
+}
+
+/* ── Category Hero Reveal Fixes ── */
+.cat-hero-text, .cat-hero-btn, .cat-hero-stats {
+    /* Initially hidden for GSAP reveal, but we prevent perma-hidden bugs */
+    opacity: 1; 
+}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="relative overflow-hidden bg-cream pt-20">
+    <!-- Branding Watermark -->
+    <div class="watermark" style="top: 5%; left: 2%; opacity: 0.02; font-size: 25vw;">MANIFESTO</div>
+    <div class="watermark" style="bottom: 10%; right: 2%; opacity: 0.015; font-size: 20vw;">EXTRA</div>
+
+    <!-- ── SECTION 1: THE ESSENCE (HERO) ── -->
+    <section class="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 relative z-10" id="about-hero">
+        <div class="reveal-up">
+            <p class="text-gold text-xs font-bold uppercase tracking-[0.5em] mb-6">Established 2025</p>
+            <h1 class="text-6xl md:text-8xl font-light text-charcoal mb-8 leading-tight uppercase tracking-tighter">
+                House of <br><span class="text-gold italic">Pure Curation</span>
+            </h1>
+            <p class="text-xl text-muted max-w-2xl mx-auto leading-relaxed font-light">
+                Disilia is more than a destination. It is a philosophy that elevates the essential into the extraordinary, meticulously selecting pieces that define the modern landscape of luxury.
+            </p>
+        </div>
+        
+        <div class="mt-16 animate-bounce opacity-30">
+            <svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7-7-7"></path></svg>
+        </div>
+    </section>
+
+    <!-- ── SECTION 2: THE GENESIS (NARRATIVE) ── -->
+    <section class="py-32 bg-white relative z-10" id="about-story">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div class="reveal-up">
+                    <h2 class="text-3xl font-light text-charcoal mb-8 uppercase tracking-widest">The <span class="text-gold italic">Genesis</span></h2>
+                    <div class="space-y-6 text-muted leading-relaxed text-lg">
+                        <p>
+                            Disilia was born from a singular question: <span class="text-charcoal italic font-medium">Why should the items we use daily be anything less than remarkable?</span>
+                        </p>
+                        <p>
+                            In an era of mass-produced mediocrity, we sought to build a sanctuary for the discerning. A place where every object—from the supplements that fuel your vitality to the textures that define your home—is vetted through a lens of uncompromising excellence.
+                        </p>
+                        <p>
+                            We travel across borders and cultures, partnering with artisans and innovators who share our obsession with detail. The result is a curated ecosystem where "Essentials" are just the beginning, and "Extra" is the standard.
+                        </p>
+                    </div>
+                </div>
+                <div class="relative reveal-up">
+                    <div class="aspect-[4/5] bg-parchment relative overflow-hidden shadow-2xl">
+                        <!-- Placeholder for Hero Image - In a real scenario I would generate this or use a high-end asset -->
+                        <div class="absolute inset-0 flex items-center justify-center text-gold/20 italic text-2xl px-12 text-center">
+                           [ Cinematic Still: Minimalist Luxury Studio ]
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-gold/5 backdrop-blur-3xl rounded-full blur-3xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SECTION 3: THE PILLARS (VALUES) ── -->
+    <section class="py-32 relative overflow-hidden bg-cream" id="about-pillars">
+        <div class="disilia-glow top-1/4 left-1/4"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-24 reveal-up">
+                <p class="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-4">Values</p>
+                <h2 class="text-4xl font-light text-charcoal uppercase tracking-widest">Our <span class="text-gold italic">Heritage</span></h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 stagger-grid">
+                <div class="float-rise bg-white/60 backdrop-blur p-12 border border-gold/10 group reveal-up">
+                    <div class="text-gold text-3xl mb-8">01</div>
+                    <h3 class="text-xl font-semibold text-charcoal mb-4 uppercase tracking-wider">Curation</h3>
+                    <p class="text-muted text-sm leading-relaxed">We don't just sell products; we curate experiences. Every item in the Disilia catalog must earn its place through a rigorous 20-point quality audit.</p>
+                </div>
+
+                <div class="float-rise bg-white/60 backdrop-blur p-12 border border-gold/10 group reveal-up">
+                    <div class="text-gold text-3xl mb-8">02</div>
+                    <h3 class="text-xl font-semibold text-charcoal mb-4 uppercase tracking-wider">Integrity</h3>
+                    <p class="text-muted text-sm leading-relaxed">Transparency is our bedrock. From ethical sourcing to secure transactions, we uphold the highest standards of trust and corporate responsibility.</p>
+                </div>
+
+                <div class="float-rise bg-white/60 backdrop-blur p-12 border border-gold/10 group reveal-up">
+                    <div class="text-gold text-3xl mb-8">03</div>
+                    <h3 class="text-xl font-semibold text-charcoal mb-4 uppercase tracking-wider">Community</h3>
+                    <p class="text-muted text-sm leading-relaxed">We serve a global community of modern visionaries. Our support is not a department; it's a commitment to your satisfaction, 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── SECTION 4: THE PROMISE (FULL WIDTH) ── -->
+    <section class="py-48 bg-charcoal text-white relative overflow-hidden" id="about-promise">
+        <div class="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 reveal-up">
+            <h2 class="text-4xl md:text-6xl font-light mb-12 italic serif">"We believe the extraordinary should be expected."</h2>
+            <div class="w-24 h-px bg-gold mx-auto mb-12"></div>
+            <p class="text-gold text-sm font-bold uppercase tracking-[0.5em]">The Disilia Promise</p>
+        </div>
+
+        <!-- Optional Inverted Wave at Bottom -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[80px]" viewBox="0 0 1200 120" preserveAspectRatio="none" style="transform: scaleY(-1);">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-32.82C939.75,34.4,1066.83,3.17,1200,61V0Z" style="fill:#ede8df; opacity:.6;"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.46C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" style="fill:#121214;"></path>
+            </svg>
+        </div>
+    </section>
+</div>
+{% endblock %}
+

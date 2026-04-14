@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-16 px-4">
+    <div class="glass-nav rounded-xl border border-gold/20 p-8 mb-8">
+        <h1 class="text-3xl font-light text-charcoal mb-2 uppercase tracking-widest">My Profile</h1>
+        <p class="text-muted mb-8">Manage your account settings and review orders.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Account Info -->
+            <div>
+                <h3 class="text-xl text-gold mb-4 uppercase tracking-wider text-sm">Account Details</h3>
+                <form method="POST" class="space-y-4">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block text-sm font-medium text-muted mb-2">Email Address</label>
+                        <input type="email" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold select-none" value="{{ request.user.email }}" readonly>
+                        <p class="mt-1 text-xs text-muted">Contact support to change email.</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-muted mb-2">First Name</label>
+                        <input type="text" name="first_name" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold" value="{{ request.user.first_name }}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-muted mb-2">Last Name</label>
+                        <input type="text" name="last_name" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold" value="{{ request.user.last_name }}">
+                    </div>
+                    <button type="submit" class="mt-4 px-6 py-2 bg-gold text-charcoal text-sm uppercase tracking-widest rounded hover:bg-yellow-500 transition-colors">Update Profile</button>
+                </form>
+            </div>
+            
+            <!-- Order History -->
+            <div>
+                <h3 class="text-xl text-gold mb-4 uppercase tracking-wider text-sm">Order History</h3>
+                <div class="space-y-4">
+                    {% for order in orders|default:"1" %}
+                    <!-- Dummy state for no orders if empty -->
+                    {% if forloop.first and not orders %}
+                    <div class="p-4 border border-gold/20 rounded bg-parchment">
+                        <p class="text-muted">You haven't placed any orders yet.</p>
+                        <a href="{% url 'store:catalog_all' %}" class="text-gold mt-2 inline-block">Start shopping →</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <form method="POST" action="{% url 'users:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="text-red-500 hover:text-red-400 uppercase tracking-widest text-sm font-semibold">Log out account</button>
+    </form>
+</div>
+{% endblock %}

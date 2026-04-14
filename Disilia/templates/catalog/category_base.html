@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{# ════════ CATEGORY HERO ════════════════════════════════════════════ #}
+<section class="relative w-full overflow-hidden"
+    style="min-height:280px; background:linear-gradient({{ category.hero_gradient }});">
+
+    {# Floating 3D canvas #}
+    <canvas id="cat-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0" style="opacity:1;"></canvas>
+
+    {# Blob accents #}
+    {# Watermark #}
+    <div class="watermark" style="top: 10%; right: -2%; color: rgba(28, 28, 30, 0.05);">{{ category.name|upper }}</div>
+
+    <div
+        class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-14 flex flex-col items-center justify-center text-center gap-10">
+        <div class="max-w-3xl flex flex-col items-center">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-gold mb-4">Disilia Collection</p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-8">
+                <span class="text-6xl md:text-8xl leading-none drop-shadow-xl flex-shrink-0">{{ category.emoji }}</span>
+                <h1
+                    class="text-4xl md:text-6xl font-extrabold text-charcoal tracking-tight leading-tight text-center md:text-left">
+                    {{ category.name }}</h1>
+            </div>
+            <p class="text-xl text-muted leading-relaxed mb-10">{{ category.tagline }}</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#products"
+                    class="inline-flex items-center gap-2 px-8 py-4 bg-gold text-white font-bold uppercase tracking-wider text-sm hover:bg-goldDark transition-all shadow-xl">
+                    Shop Collection →
+                </a>
+                <a href="{% url 'store:catalog_all' %}"
+                    class="inline-flex items-center gap-2 px-8 py-4 border-2 border-charcoal/20 text-charcoal font-bold uppercase tracking-wider text-sm hover:border-gold hover:text-gold transition-all">
+                    Show All Universes
+                </a>
+            </div>
+        </div>
+
+        {# Centered Stats #}
+        <div class="flex flex-wrap justify-center gap-4 mb-4">
+            <div class="text-center bg-white/40 backdrop-blur-sm border border-gold/10 px-20 py-4 rounded-sm shadow-sm">
+                <div class="text-4xl font-extrabold text-gold">{{ products.count }}</div>
+                <div class="text-[10px] text-muted uppercase tracking-[0.3em] mt-2">Products</div>
+            </div>
+            <div class="text-center bg-white/40 backdrop-blur-sm border border-gold/10 px-20 py-4 rounded-sm shadow-sm">
+                <div class="text-4xl font-extrabold text-gold">{{ subcategories.count }}</div>
+                <div class="text-[10px] text-muted uppercase tracking-[0.3em] mt-2">Categories</div>
+            </div>
+        </div>
+
+        <!-- Liquid SVG Divider (Bottom) -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] z-20">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[80px]" style="transform: rotate(180deg);"
+                viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path
+                    d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5,73.84-4.36,147.54,16.88,218.2,35.26,69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-32.82C939.75,34.4,1066.83,3.17,1200,61V0Z"
+                    style="fill:#ede8df; opacity:.6;"></path>
+                <path
+                    d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.46C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+                    style="fill:#f8f5f0;"></path>
+            </svg>
+        </div>
+</section>
+
+{# ════════ SUBCATEGORY STICKY NAV ═══════════════════════════════════ #}
+<nav class="sticky top-20 z-40 bg-white/95 backdrop-blur border-b border-gold/15 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-2 overflow-x-auto py-3" style="scrollbar-width:none;">
+            <a href="{{ request.path }}"
+                class="flex-shrink-0 px-5 py-2 text-xs font-bold uppercase tracking-widest transition-all
+                      {% if not active_sub %}bg-gold text-white border border-gold{% else %}border border-charcoal/20 text-charcoal hover:border-gold hover:text-gold{% endif %}">
+                All
+            </a>
+            {% for sub in subcategories %}
+            <a href="?sub={{ sub.slug }}"
+                class="flex-shrink-0 px-5 py-2 text-xs font-bold uppercase tracking-widest transition-all
+                      {% if active_sub == sub.slug %}bg-gold text-white border border-gold{% else %}border border-charcoal/20 text-charcoal hover:border-gold hover:text-gold{% endif %}">
+                {{ sub.name }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</nav>
+
+{# ════════ SUBCATEGORY GRID ══════════════════════════════════════════ #}
+{% if not active_sub %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" id="shop-by-category">
+    <div class="mb-8">
+        <h2 class="text-2xl font-light text-charcoal">Shop by <span class="text-gold italic">Subcategory</span></h2>
+        <div class="w-12 h-1 bg-gold mt-3"></div>
+    </div>
+    <div
+        class="stagger-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-{{ subcategories.count|default:3 }} gap-6 lg:gap-8">
+        {% for sub in subcategories %}
+        <a href="?sub={{ sub.slug }}"
+            class="float-rise group relative overflow-hidden border border-gold/15 bg-white hover:border-gold transition-all duration-300 p-8 flex flex-col gap-4 shadow-sm">
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-all duration-500 pointer-events-none"
+                style="background:linear-gradient(135deg,#c9873c,transparent);"></div>
+            <span class="text-4xl">{{ category.emoji }}</span>
+            <div>
+                <h3
+                    class="font-bold text-charcoal group-hover:text-gold transition-colors text-sm uppercase tracking-wider">
+                    {{ sub.name }}</h3>
+                <p class="text-xs text-muted mt-1">{{ sub.products.count }} products</p>
+            </div>
+            <span class="text-gold text-sm mt-auto group-hover:translate-x-1 transition-transform inline-block">Browse
+                →</span>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{# ════════ PRODUCTS GRID ═════════════════════════════════════════════ #}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" id="products">
+    <div class="flex items-end justify-between mb-8">
+        <div>
+            <h2 class="text-2xl font-light text-charcoal">
+                {% if active_sub %}
+                {{ active_sub|title }}
+                {% else %}
+                All <span class="text-gold italic">{{ category.name }}</span> Products
+                {% endif %}
+            </h2>
+            <div class="w-12 h-1 bg-gold mt-3"></div>
+        </div>
+        <span class="text-xs text-muted uppercase tracking-widest">{{ products.count }} items</span>
+    </div>
+
+    <div class="stagger-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+        {% for product in products %}
+        <a href="{% url 'store:product_detail' category.slug product.slug %}"
+            class="float-rise group block border border-gold/15 bg-white hover:border-gold transition-all duration-300 relative overflow-hidden shadow-sm">
+            {# Shimmer overlay on hover #}
+            <div
+                class="absolute inset-0 opacity-0 group-hover:opacity-5 bg-gold transition-opacity duration-300 pointer-events-none z-10">
+            </div>
+            <div class="relative overflow-hidden h-56 bg-cream">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                {% else %}
+                <div class="w-full h-full flex items-center justify-center text-6xl text-muted/20"
+                    style="background:linear-gradient(135deg,{{ category.hero_gradient }});">{{ category.emoji }}</div>
+                {% endif %}
+                {% if product.is_featured %}
+                <span
+                    class="absolute top-3 left-3 bg-gold text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 z-20">Hot</span>
+                {% endif %}
+                {% if product.stock == 0 %}
+                <div class="absolute inset-0 bg-white/70 flex items-center justify-center z-20">
+                    <span
+                        class="text-xs font-bold uppercase tracking-widest text-muted border border-muted px-4 py-2">Out
+                        of Stock</span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="p-5">
+                <p class="text-[10px] uppercase tracking-widest text-muted mb-1">{{ product.subcategory.name }}</p>
+                <h3
+                    class="text-sm font-semibold text-charcoal group-hover:text-gold transition-colors leading-snug mb-3 line-clamp-2">
+                    {{ product.name }}</h3>
+                <div class="flex items-center justify-between">
+                    <span class="text-gold font-bold text-base">${{ product.price }}</span>
+                    <span
+                        class="text-[10px] uppercase tracking-wider border border-charcoal/20 text-charcoal px-3 py-1.5 group-hover:border-gold group-hover:text-gold group-hover:bg-gold/5 transition-all">Add
+                        →</span>
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <div class="col-span-full py-24 text-center border border-dashed border-gold/20">
+            <div class="text-6xl mb-4">{{ category.emoji }}</div>
+            <p class="text-muted">No products yet — check back soon!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{# ════════ MOST SELLING / FEATURED ══════════════════════════════════ #}
+{% if most_selling %}
+<section class="bg-parchment border-y border-gold/15 py-14" id="most-selling">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <h2 class="text-2xl font-light text-charcoal">Most <span class="text-gold italic">Popular</span></h2>
+                <div class="w-12 h-1 bg-gold mt-3"></div>
+            </div>
+            <div class="flex gap-2">
+                <button id="ms-prev"
+                    class="w-9 h-9 border border-charcoal/20 text-charcoal hover:border-gold hover:text-gold transition-all flex items-center justify-center text-sm">←</button>
+                <button id="ms-next"
+                    class="w-9 h-9 border border-charcoal/20 text-charcoal hover:border-gold hover:text-gold transition-all flex items-center justify-center text-sm">→</button>
+            </div>
+        </div>
+        <div class="overflow-hidden relative">
+            <div id="ms-track" class="flex gap-5 transition-transform duration-500" style="will-change:transform;">
+                {% for product in most_selling %}
+                <a href="{% url 'store:product_detail' category.slug product.slug %}"
+                    class="float-rise group flex-shrink-0 border border-gold/15 bg-white hover:border-gold transition-all block shadow-sm"
+                    style="min-width:240px;">
+                    <div class="h-44 overflow-hidden relative bg-cream">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        {% else %}
+                        <div class="w-full h-full flex items-center justify-center text-5xl text-muted/20">{{ category.emoji }}</div>
+                        {% endif %}
+                        <span
+                            class="absolute top-2 left-2 bg-gold text-white text-[9px] font-bold uppercase tracking-widest px-2 py-0.5">🔥
+                            Popular</span>
+                    </div>
+                    <div class="p-4">
+                        <h3
+                            class="text-xs font-semibold text-charcoal group-hover:text-gold transition-colors leading-snug mb-2 line-clamp-2">
+                            {{ product.name }}</h3>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gold font-bold">${{ product.price }}</span>
+                            <span
+                                class="text-[9px] border border-charcoal/15 text-muted px-2 py-1 group-hover:border-gold group-hover:text-gold transition-all">Add</span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{# ════════ DISCOVER OTHER CATEGORIES ══════════════════════════════════ #}
+<section class="py-16 bg-cream border-b border-gold/15" id="explore-worlds">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-light text-charcoal">Explore Other <span class="text-gold italic">Worlds</span>
+            </h2>
+            <div class="w-16 h-1 bg-gold mx-auto mt-4"></div>
+        </div>
+        <div class="flex justify-center flex-wrap gap-6">
+            {% for cat in all_categories %}
+            {% if cat.slug != category.slug %}
+            <a href="{{ cat.get_absolute_url }}"
+                class="float-rise group flex flex-col items-center justify-center gap-3 p-6 border border-gold/15 bg-white hover:border-gold transition-all rounded-sm text-center relative overflow-hidden shadow-sm w-44">
+                <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none"
+                    style="background:linear-gradient({{ cat.hero_gradient }});"></div>
+                <span class="text-4xl group-hover:scale-125 transition-transform duration-300 z-10">{{ cat.emoji }}</span>
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal group-hover:text-gold transition-colors z-10">{{ cat.name }}</span>
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/category_animation.js' %}"></script>
+<script>
+    window.initCategoryAnimation({
+        slug: '{{ category.slug }}'
+    });
+    window.initProductCarousel();
+</script>
+{% endblock %}
+
+{% endblock %}
