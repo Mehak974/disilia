@@ -1,17 +1,21 @@
-# Global Ignores
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
 venv/
+.env
+
+# VS Code
+.vscode/
+
+# OS Specific
 .DS_Store
 Thumbs.db
-
-# Disilia Specific (as subdirectory)
-Disilia/db.sqlite3
-Disilia/db.sqlite3-journal
-Disilia/media/
-Disilia/staticfiles/
-Disilia/.env
-Disilia/__pycache__/
-Disilia/local_settings.py
-Disilia/*.log
-Disilia/.vscode/
-Disilia/*.py[cod]
-Disilia/*$py.class
