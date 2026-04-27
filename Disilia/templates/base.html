@@ -86,7 +86,7 @@
                                         <ul class="space-y-3">
                                             {% for sub in cat.subcategories.all %}
                                             <li>
-                                                <a href="{% url 'store:catalog_category' cat.slug %}?sub={{ sub.slug }}" class="text-charcoal hover:text-gold text-[11px] uppercase tracking-widest block transition-colors">
+                                                <a href="{{ cat.get_absolute_url }}?sub={{ sub.slug }}" class="text-charcoal hover:text-gold text-[11px] uppercase tracking-widest block transition-colors">
                                                     {{ sub.name }}
                                                 </a>
                                             </li>
@@ -107,13 +107,26 @@
                     </div>
                 </div>
 
+                <!-- Desktop Search -->
+                <div class="hidden lg:flex flex-1 max-w-xs mx-8">
+                    <form action="{% url 'store:search' %}" method="get" class="relative w-full group">
+                        <input type="text" name="q" placeholder="Discovery..." 
+                               class="w-full bg-transparent border-b border-charcoal/10 py-1 pr-8 text-[10px] tracking-widest focus:outline-none focus:border-gold transition-all placeholder:text-muted/50">
+                        <button type="submit" class="absolute right-0 top-1/2 -translate-y-1/2 text-charcoal/40 hover:text-gold transition-colors">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </button>
+                    </form>
+                </div>
+
                 <!-- Right Side Actions -->
                 <div class="flex items-center space-x-6">
                     <div class="hidden md:flex items-center space-x-6">
                         {% if user.is_authenticated %}
-                        <a href="#" class="text-charcoal hover:text-gold text-[10px] uppercase tracking-[0.2em] font-bold">Profile</a>
+                        <a href="{% url 'users:profile' %}" class="text-charcoal hover:text-gold text-[10px] uppercase tracking-[0.2em] font-bold">Profile</a>
+                        <a href="{% url 'users:logout' %}" class="text-charcoal/40 hover:text-gold text-[10px] uppercase tracking-[0.2em] font-bold">Logout</a>
                         {% else %}
-                        <a href="{% url 'users:login' %}" class="text-charcoal hover:text-gold text-[10px] uppercase tracking-[0.2em] font-bold">Registry</a>
+                        <a href="{% url 'users:login' %}" class="text-charcoal hover:text-gold text-[10px] uppercase tracking-[0.2em] font-bold">Login</a>
+                        <a href="{% url 'users:signup' %}" class="px-4 py-2 bg-gold text-white text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-charcoal transition-colors">Sign Up</a>
                         {% endif %}
                     </div>
                     
@@ -159,7 +172,7 @@
                                 </summary>
                                 <ul class="mt-4 space-y-3 pl-4">
                                     {% for sub in cat.subcategories.all %}
-                                    <li><a href="{% url 'store:catalog_category' cat.slug %}?sub={{ sub.slug }}" class="text-sm text-charcoal">{{ sub.name }}</a></li>
+                                    <li><a href="{{ cat.get_absolute_url }}?sub={{ sub.slug }}" class="text-sm text-charcoal">{{ sub.name }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </details>

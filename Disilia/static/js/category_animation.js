@@ -127,3 +127,48 @@ window.initProductCarousel = function() {
     }
 };
 
+window.initCategoryCarousel = function() {
+    const catTrack = document.getElementById('cat-track');
+    const catPrev = document.getElementById('cat-prev');
+    const catNext = document.getElementById('cat-next');
+    if (catTrack && catPrev && catNext) {
+        let cur = 0;
+        const cw = () => { const c = catTrack.children[0]; return c ? c.offsetWidth + 24 : 200; };
+        catNext.onclick = () => {
+            const visibleWidth = catTrack.parentElement.offsetWidth;
+            const totalWidth = catTrack.children.length * cw();
+            if (totalWidth > visibleWidth) {
+                cur = Math.min(cur + 1, catTrack.children.length - Math.floor(visibleWidth / cw()));
+                catTrack.style.transform = `translateX(-${cur * cw()}px)`;
+            }
+        };
+        catPrev.onclick = () => {
+            cur = Math.max(cur - 1, 0);
+            catTrack.style.transform = `translateX(-${cur * cw()}px)`;
+        };
+    }
+};
+
+window.initSubNavArrows = function() {
+    const container = document.getElementById('sub-nav-container');
+    const prev = document.getElementById('sub-prev');
+    const next = document.getElementById('sub-next');
+    if (container && prev && next) {
+        const updateArrows = () => {
+            prev.style.opacity = container.scrollLeft > 20 ? '1' : '0';
+            prev.style.pointerEvents = container.scrollLeft > 20 ? 'auto' : 'none';
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            next.style.opacity = container.scrollLeft < maxScroll - 20 ? '1' : '0';
+            next.style.pointerEvents = container.scrollLeft < maxScroll - 20 ? 'auto' : 'none';
+        };
+        
+        container.onscroll = updateArrows;
+        next.onclick = () => container.scrollBy({ left: 300, behavior: 'smooth' });
+        prev.onclick = () => container.scrollBy({ left: -300, behavior: 'smooth' });
+        
+        // Initial check
+        updateArrows();
+        // Check on resize
+        window.onresize = updateArrows;
+    }
+};

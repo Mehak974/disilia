@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Orders | Disilia Executive{% endblock %}
+
+{% block content %}
+<div class="pt-32 pb-20 bg-parchment min-h-screen">
+    <div class="max-w-4xl mx-auto px-4">
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <div class="bg-white border border-gold/10 p-8 rounded-[30px] text-center shadow-sm">
+                    <div class="w-20 h-20 bg-gold/10 text-gold rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-light">
+                        {{ user.username|first|upper }}
+                    </div>
+                    <h2 class="text-xl font-light text-charcoal">{{ user.get_full_name|default:user.username }}</h2>
+                    <p class="text-[10px] text-muted uppercase tracking-widest mt-1">Platinum Member</p>
+                </div>
+
+                <nav class="bg-white border border-gold/10 p-4 rounded-[30px] shadow-sm">
+                    <a href="{% url 'users:profile' %}" class="block px-6 py-3 text-charcoal hover:text-gold text-xs font-bold uppercase tracking-widest transition-colors">Profile Details</a>
+                    <a href="{% url 'users:orders' %}" class="block px-6 py-3 bg-cream text-gold text-xs font-bold uppercase tracking-widest rounded-xl">My Orders</a>
+                    <a href="{% url 'users:wishlist' %}" class="block px-6 py-3 text-charcoal hover:text-gold text-xs font-bold uppercase tracking-widest transition-colors">Wishlist</a>
+                    <div class="my-4 border-t border-gold/5"></div>
+                    <a href="{% url 'users:logout' %}" class="block px-6 py-3 text-red-400 hover:text-red-600 text-xs font-bold uppercase tracking-widest transition-colors">Logout</a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="md:col-span-2">
+                <div class="bg-white border border-gold/10 p-12 rounded-[40px] shadow-sm">
+                    <h2 class="text-2xl font-light text-charcoal mb-8">Purchase <span class="text-gold italic">History</span></h2>
+                    
+                    {% if orders %}
+                    <div class="space-y-6">
+                        {% for order in orders %}
+                        <div class="border border-gold/10 p-6 rounded-2xl bg-parchment/30">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-widest text-muted font-bold">Order #{{ order.id }}</p>
+                                    <p class="text-xs text-charcoal">{{ order.created_at|date:"M d, Y" }}</p>
+                                </div>
+                                <span class="px-3 py-1 bg-gold/10 text-gold text-[9px] font-bold uppercase tracking-widest rounded-full">
+                                    {% if order.paid %}Confirmed{% else %}Pending{% endif %}
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between pt-4 border-t border-gold/5">
+                                <p class="text-sm font-light text-charcoal">{{ order.items.count }} Item{{ order.items.count|pluralize }}</p>
+                                <p class="text-lg font-bold text-gold">${{ order.get_total_cost }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-12 border border-dashed border-gold/20 rounded-3xl">
+                        <p class="text-muted text-sm italic">You haven't placed any orders yet.</p>
+                        <a href="{% url 'store:catalog_all' %}" class="inline-block mt-4 text-gold text-xs font-bold uppercase tracking-widest border-b border-gold">Start Shopping</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

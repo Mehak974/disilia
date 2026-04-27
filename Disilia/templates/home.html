@@ -171,7 +171,7 @@
              class="flex gap-6 transition-transform duration-500 ease-in-out"
              style="will-change:transform;">
 
-            {% for product in featured_products %}
+            {% for product in elite_collection %}
             <a href="{% url 'store:product_detail' product.subcategory.category.slug product.slug %}"
                class="float-rise group flex-shrink-0 w-[calc(25%-18px)] bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all duration-300 block"
                style="min-width:260px;">
@@ -179,17 +179,29 @@
                     {% if product.image %}
                     <img src="{{ product.image.url }}" alt="{{ product.name }}"
                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    {% elif product.image_url %}
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                     {% else %}
-                    <div class="w-full h-full flex items-center justify-center text-5xl text-white/10">🛍️</div>
+                    <div class="w-full h-full flex items-center justify-center text-5xl text-white/10">{{ product.subcategory.category.emoji }}</div>
                     {% endif %}
+
+                    {% if product.stock == 0 %}
+                    <div class="absolute inset-0 bg-charcoal/60 backdrop-blur-[2px] flex items-center justify-center z-10">
+                        <span class="px-4 py-2 bg-gold text-white text-[10px] font-bold uppercase tracking-widest">Out of Stock</span>
+                    </div>
+                    {% else %}
                     <span class="absolute top-4 left-4 bg-gold text-white text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 shadow-xl">New Arrival</span>
+                    {% endif %}
                 </div>
                 <div class="p-6">
                     <p class="text-[9px] uppercase tracking-[0.2em] text-gold font-bold mb-2">{{ product.subcategory.category.name }}</p>
                     <h3 class="text-sm font-medium text-white group-hover:text-gold transition-colors leading-relaxed mb-4 line-clamp-2">{{ product.name }}</h3>
                     <div class="flex items-center justify-between">
                         <span class="text-white font-bold text-lg">${{ product.price }}</span>
+                        {% if product.stock > 0 %}
                         <span class="text-[9px] uppercase tracking-widest bg-gold/10 text-gold border border-gold/20 px-4 py-2 hover:bg-gold hover:text-white transition-all">Select</span>
+                        {% endif %}
                     </div>
                 </div>
             </a>

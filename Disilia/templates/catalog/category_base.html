@@ -62,54 +62,31 @@
         </div>
 </section>
 
-{# ════════ SUBCATEGORY STICKY NAV ═══════════════════════════════════ #}
-<nav class="sticky top-20 z-40 bg-white/95 backdrop-blur border-b border-gold/15 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-2 overflow-x-auto py-3" style="scrollbar-width:none;">
-            <a href="{{ request.path }}"
-                class="flex-shrink-0 px-5 py-2 text-xs font-bold uppercase tracking-widest transition-all
-                      {% if not active_sub %}bg-gold text-white border border-gold{% else %}border border-charcoal/20 text-charcoal hover:border-gold hover:text-gold{% endif %}">
-                All
-            </a>
-            {% for sub in subcategories %}
-            <a href="?sub={{ sub.slug }}"
-                class="flex-shrink-0 px-5 py-2 text-xs font-bold uppercase tracking-widest transition-all
-                      {% if active_sub == sub.slug %}bg-gold text-white border border-gold{% else %}border border-charcoal/20 text-charcoal hover:border-gold hover:text-gold{% endif %}">
-                {{ sub.name }}
-            </a>
-            {% endfor %}
+{# ════════ STICKY CATEGORY NAV ════════════════════════════════════════ #}
+<nav class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gold/10 shadow-sm" id="sticky-nav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center">
+        <!-- Scroll Arrows -->
+        <button id="sub-prev" class="absolute left-2 z-10 w-8 h-8 flex items-center justify-center text-gold bg-white/80 rounded-full shadow-md hover:bg-gold hover:text-white transition-all opacity-0 pointer-events-none">←</button>
+        
+        <div id="sub-nav-container" class="flex-1 overflow-x-auto no-scrollbar py-4 scroll-smooth">
+            <div class="flex items-center space-x-8 min-w-max px-8" id="sub-nav-track">
+                <a href="{{ category.get_absolute_url }}#products"
+                    class="text-[11px] font-bold uppercase tracking-[0.2em] transition-all hover:text-gold {% if not current_subcategory %}text-gold border-b-2 border-gold pb-1{% else %}text-charcoal/60{% endif %}">
+                    All
+                </a>
+                {% for sub in category.subcategories.all %}
+                <a href="?subcategory={{ sub.slug }}#products"
+                    class="text-[11px] font-bold uppercase tracking-[0.2em] transition-all hover:text-gold {% if current_subcategory.slug == sub.slug %}text-gold border-b-2 border-gold pb-1{% else %}text-charcoal/60{% endif %}">
+                    {{ sub.name }}
+                </a>
+                {% endfor %}
+            </div>
         </div>
+
+        <button id="sub-next" class="absolute right-2 z-10 w-8 h-8 flex items-center justify-center text-gold bg-white/80 rounded-full shadow-md hover:bg-gold hover:text-white transition-all">→</button>
     </div>
 </nav>
 
-{# ════════ SUBCATEGORY GRID ══════════════════════════════════════════ #}
-{% if not active_sub %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" id="shop-by-category">
-    <div class="mb-8">
-        <h2 class="text-2xl font-light text-charcoal">Shop by <span class="text-gold italic">Subcategory</span></h2>
-        <div class="w-12 h-1 bg-gold mt-3"></div>
-    </div>
-    <div
-        class="stagger-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-{{ subcategories.count|default:3 }} gap-6 lg:gap-8">
-        {% for sub in subcategories %}
-        <a href="?sub={{ sub.slug }}"
-            class="float-rise group relative overflow-hidden border border-gold/15 bg-white hover:border-gold transition-all duration-300 p-8 flex flex-col gap-4 shadow-sm">
-            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-all duration-500 pointer-events-none"
-                style="background:linear-gradient(135deg,#c9873c,transparent);"></div>
-            <span class="text-4xl">{{ category.emoji }}</span>
-            <div>
-                <h3
-                    class="font-bold text-charcoal group-hover:text-gold transition-colors text-sm uppercase tracking-wider">
-                    {{ sub.name }}</h3>
-                <p class="text-xs text-muted mt-1">{{ sub.products.count }} products</p>
-            </div>
-            <span class="text-gold text-sm mt-auto group-hover:translate-x-1 transition-transform inline-block">Browse
-                →</span>
-        </a>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
 
 {# ════════ PRODUCTS GRID ═════════════════════════════════════════════ #}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10" id="products">
@@ -139,11 +116,20 @@
                 {% if product.image %}
                 <img src="{{ product.image.url }}" alt="{{ product.name }}"
                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                {% elif product.image_url %}
+                <img src="{{ product.image_url }}" alt="{{ product.name }}"
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 {% else %}
                 <div class="w-full h-full flex items-center justify-center text-6xl text-muted/20"
                     style="background:linear-gradient(135deg,{{ category.hero_gradient }});">{{ category.emoji }}</div>
                 {% endif %}
-                {% if product.is_featured %}
+                {% if product.stock == 0 %}
+                <div class="absolute inset-0 bg-white/60 backdrop-blur-[2px] flex items-center justify-center z-20">
+                    <span class="px-4 py-2 bg-charcoal text-white text-[10px] font-bold uppercase tracking-widest">Out of Stock</span>
+                </div>
+                {% endif %}
+
+                {% if product.is_featured and product.stock > 0 %}
                 <span
                     class="absolute top-3 left-3 bg-gold text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 z-20">Hot</span>
                 {% endif %}
@@ -162,9 +148,11 @@
                     {{ product.name }}</h3>
                 <div class="flex items-center justify-between">
                     <span class="text-gold font-bold text-base">${{ product.price }}</span>
+                    {% if product.stock > 0 %}
                     <span
                         class="text-[10px] uppercase tracking-wider border border-charcoal/20 text-charcoal px-3 py-1.5 group-hover:border-gold group-hover:text-gold group-hover:bg-gold/5 transition-all">Add
                         →</span>
+                    {% endif %}
                 </div>
             </div>
         </a>
@@ -175,6 +163,32 @@
         </div>
         {% endfor %}
     </div>
+
+    <!-- Pagination -->
+    {% if products.has_other_pages %}
+    <div class="mt-20 flex items-center justify-center gap-4">
+        {% if products.has_previous %}
+        <a href="?page={{ products.previous_page_number }}{% if active_sub %}&sub={{ active_sub }}{% endif %}" 
+           class="w-12 h-12 flex items-center justify-center border border-gold/10 hover:border-gold hover:text-gold transition-all bg-white shadow-sm">←</a>
+        {% endif %}
+
+        <div class="flex gap-2">
+            {% for i in products.paginator.page_range %}
+                {% if products.number == i %}
+                <span class="w-12 h-12 flex items-center justify-center bg-gold text-white font-bold text-xs">{{ i }}</span>
+                {% elif i > products.number|add:'-3' and i < products.number|add:'3' %}
+                <a href="?page={{ i }}{% if active_sub %}&sub={{ active_sub }}{% endif %}" 
+                   class="w-12 h-12 flex items-center justify-center border border-gold/10 hover:border-gold hover:text-gold transition-all bg-white shadow-sm text-xs">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if products.has_next %}
+        <a href="?page={{ products.next_page_number }}{% if active_sub %}&sub={{ active_sub }}{% endif %}" 
+           class="w-12 h-12 flex items-center justify-center border border-gold/10 hover:border-gold hover:text-gold transition-all bg-white shadow-sm">→</a>
+        {% endif %}
+    </div>
+    {% endif %}
 </div>
 
 {# ════════ MOST SELLING / FEATURED ══════════════════════════════════ #}
@@ -203,6 +217,9 @@
                         {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        {% elif product.image_url %}
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         {% else %}
                         <div class="w-full h-full flex items-center justify-center text-5xl text-muted/20">{{ category.emoji }}</div>
                         {% endif %}
@@ -229,28 +246,41 @@
 {% endif %}
 
 {# ════════ DISCOVER OTHER CATEGORIES ══════════════════════════════════ #}
-<section class="py-16 bg-cream border-b border-gold/15" id="explore-worlds">
+<section class="py-20 bg-cream border-y border-gold/15" id="explore-worlds">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-light text-charcoal">Explore Other <span class="text-gold italic">Worlds</span>
-            </h2>
-            <div class="w-16 h-1 bg-gold mx-auto mt-4"></div>
+        <div class="flex items-center justify-between mb-12">
+            <div>
+                <p class="text-gold text-xs font-bold uppercase tracking-[0.3em] mb-3">Infinite Curation</p>
+                <h2 class="text-3xl font-light text-charcoal">Explore Other <span class="text-gold italic">Worlds</span></h2>
+                <div class="w-16 h-1 bg-gold mt-4"></div>
+            </div>
+            <div class="flex gap-3">
+                <button id="cat-prev"
+                    class="w-12 h-12 border border-charcoal/20 text-charcoal hover:border-gold hover:text-gold transition-all flex items-center justify-center text-sm bg-white shadow-sm">←</button>
+                <button id="cat-next"
+                    class="w-12 h-12 border border-charcoal/20 text-charcoal hover:border-gold hover:text-gold transition-all flex items-center justify-center text-sm bg-white shadow-sm">→</button>
+            </div>
         </div>
-        <div class="flex justify-center flex-wrap gap-6">
-            {% for cat in all_categories %}
-            {% if cat.slug != category.slug %}
-            <a href="{{ cat.get_absolute_url }}"
-                class="float-rise group flex flex-col items-center justify-center gap-3 p-6 border border-gold/15 bg-white hover:border-gold transition-all rounded-sm text-center relative overflow-hidden shadow-sm w-44">
-                <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none"
-                    style="background:linear-gradient({{ cat.hero_gradient }});"></div>
-                <span class="text-4xl group-hover:scale-125 transition-transform duration-300 z-10">{{ cat.emoji }}</span>
-                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal group-hover:text-gold transition-colors z-10">{{ cat.name }}</span>
-            </a>
-            {% endif %}
-            {% endfor %}
+        
+        <div class="overflow-hidden relative">
+            <div id="cat-track" class="flex gap-6 transition-transform duration-500 ease-out" style="will-change:transform;">
+                {% for cat in all_categories %}
+                {% if cat.slug != category.slug %}
+                <a href="{{ cat.get_absolute_url }}"
+                    class="float-rise group flex-shrink-0 flex flex-col items-center justify-center gap-4 p-8 border border-gold/15 bg-white hover:border-gold transition-all rounded-sm text-center relative overflow-hidden shadow-sm w-48">
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none"
+                        style="background:linear-gradient({{ cat.hero_gradient }});"></div>
+                    <span class="text-5xl group-hover:scale-125 transition-transform duration-300 z-10">{{ cat.emoji }}</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-charcoal group-hover:text-gold transition-colors z-10">{{ cat.name }}</span>
+                </a>
+                {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 </section>
+
+
 
 {% block extra_js %}
 {% load static %}
@@ -260,6 +290,8 @@
         slug: '{{ category.slug }}'
     });
     window.initProductCarousel();
+    window.initCategoryCarousel();
+    window.initSubNavArrows();
 </script>
 {% endblock %}
 

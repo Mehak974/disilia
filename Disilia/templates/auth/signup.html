@@ -1,48 +1,57 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Signup | Join Disilia Executive Registry{% endblock %}
 
 {% block content %}
-<div class="max-w-md mx-auto mt-20 p-8 glass-nav rounded-xl border border-gold/20 relative shadow-2xl">
-    <div class="absolute inset-0 bg-gradient-to-bl from-gold/10 to-transparent rounded-xl pointer-events-none"></div>
-    <div class="relative z-10">
-        <h2 class="text-3xl font-light text-charcoal mb-6 uppercase tracking-widest text-center">Join Disilia</h2>
-        
-        <form method="POST" class="space-y-6">
-            {% csrf_token %}
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label for="first_name" class="block text-sm font-medium text-muted mb-2">First Name</label>
-                    <input type="text" id="first_name" name="first_name" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold transition-colors" required>
-                </div>
-                <div>
-                    <label for="last_name" class="block text-sm font-medium text-muted mb-2">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold transition-colors" required>
-                </div>
-            </div>
+<div class="pt-32 pb-20 bg-parchment min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full mx-4">
+        <div class="bg-white border border-gold/10 p-12 shadow-2xl rounded-[40px] relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-gold/0 via-gold to-gold/0"></div>
             
-            <div>
-                <label for="email" class="block text-sm font-medium text-muted mb-2">Email Address</label>
-                <input type="email" id="email" name="email" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold transition-colors" required>
-            </div>
-            
-            <div>
-                <label for="password" class="block text-sm font-medium text-muted mb-2">Password</label>
-                <input type="password" id="password" name="password" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold transition-colors" required>
-            </div>
-            
-            <div>
-                <label for="password_confirm" class="block text-sm font-medium text-muted mb-2">Confirm Password</label>
-                <input type="password" id="password_confirm" name="password_confirm" class="w-full bg-parchment border border-gray-700 rounded p-3 text-charcoal focus:outline-none focus:border-gold transition-colors" required>
+            <div class="text-center mb-10">
+                <p class="text-gold text-[10px] font-bold uppercase tracking-[0.4em] mb-4">Membership</p>
+                <h1 class="text-3xl font-light text-charcoal">Registry <span class="text-gold italic">Signup</span></h1>
             </div>
 
-            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-charcoal bg-gold hover:bg-yellow-500 transition-colors uppercase tracking-widest">
-                Create Account
-            </button>
-        </form>
-        
-        <p class="mt-6 text-center text-sm text-muted">
-            Already have an account? 
-            <a href="{% url 'users:login' %}" class="font-medium text-gold hover:text-yellow-400">Sign in</a>
-        </p>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="space-y-1">
+                    <label class="text-[9px] uppercase tracking-widest text-muted font-bold">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <p class="text-red-500 text-[9px]">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="w-full py-4 bg-charcoal text-white text-xs font-bold uppercase tracking-[0.3em] hover:bg-gold transition-all mt-8">
+                    Create Account
+                </button>
+            </form>
+
+            <div class="mt-10 pt-8 border-t border-gold/5 text-center">
+                <p class="text-muted text-xs">Already have an account? <a href="{% url 'users:login' %}" class="text-gold font-bold hover:underline">Log In</a></p>
+            </div>
+        </div>
     </div>
 </div>
+
+<style>
+    input {
+        width: 100%;
+        background: #f8f5f0;
+        border: 1px solid rgba(197, 160, 89, 0.1);
+        padding: 10px 16px;
+        font-size: 13px;
+        letter-spacing: 0.05em;
+        outline: none;
+        transition: all 0.3s;
+    }
+    input:focus {
+        border-color: #c5a059;
+        background: white;
+    }
+</style>
 {% endblock %}

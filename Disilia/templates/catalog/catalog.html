@@ -33,7 +33,7 @@
                 </li>
                 {% for cat in all_categories %}
                 <li>
-                    <a href="{% url 'store:catalog_category' cat.slug %}" class="{% if category.id == cat.id %}text-gold font-bold{% else %}text-muted hover:text-charcoal{% endif %} transition-colors flex items-center gap-2">
+                    <a href="{{ cat.get_absolute_url }}" class="{% if category.id == cat.id %}text-gold font-bold{% else %}text-muted hover:text-charcoal{% endif %} transition-colors flex items-center gap-2">
                         <span class="text-sm">{{ cat.emoji }}</span>
                         {{ cat.name }}
                     </a>
@@ -58,6 +58,8 @@
                         <!-- Immersive Image Placeholder -->
                         {% if product.image %}
                         <img src="{{ product.image.url }}" alt="{{ product.name }}" class="object-center object-cover group-hover:scale-105 transition-transform duration-500">
+                        {% elif product.image_url %}
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="object-center object-cover group-hover:scale-105 transition-transform duration-500">
                         {% else %}
                         <div class="text-4xl opacity-50 group-hover:scale-110 transition-transform duration-500">✨</div>
                         {% endif %}

@@ -26,6 +26,10 @@
                 <img src="{{ product.image.url }}" alt="{{ product.name }}"
                      class="relative z-10 w-full h-full object-contain p-8 group-hover:scale-105 transition-transform duration-700"
                      style="max-height:480px;">
+                {% elif product.image_url %}
+                <img src="{{ product.image_url }}" alt="{{ product.name }}"
+                     class="relative z-10 w-full h-full object-contain p-8 group-hover:scale-105 transition-transform duration-700"
+                     style="max-height:480px;">
                 {% else %}
                 <div class="relative z-10 w-full h-full flex items-center justify-center" style="min-height:480px;">
                     <div class="text-center">
@@ -110,11 +114,18 @@
                     </button>
                     {% endif %}
                 </div>
-                <a href="{% url 'store:checkout' %}"
-                   class="block w-full text-center border-2 border-charcoal text-charcoal font-bold uppercase tracking-widest text-sm py-4 hover:bg-charcoal hover:text-white transition-all">
-                    ⚡ Buy Now
-                </a>
-            </form>
+                    {% if product.stock > 0 %}
+                    <a href="{% url 'store:checkout' %}"
+                       class="block w-full text-center border-2 border-charcoal text-charcoal font-bold uppercase tracking-widest text-sm py-4 hover:bg-charcoal hover:text-white transition-all">
+                        ⚡ Buy Now
+                    </a>
+                    {% else %}
+                    <button type="button" disabled
+                            class="block w-full text-center border-2 border-charcoal/10 text-muted font-bold uppercase tracking-widest text-sm py-4 cursor-not-allowed">
+                        Not Available
+                    </button>
+                    {% endif %}
+                </form>
 
             {# Trust badges #}
             <div class="grid grid-cols-3 gap-4 border-t border-gold/15 pt-6">
@@ -157,6 +168,8 @@
                     <div class="h-44 overflow-hidden bg-cream relative">
                         {% if p.image %}
                         <img src="{{ p.image.url }}" alt="{{ p.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        {% elif p.image_url %}
+                        <img src="{{ p.image_url }}" alt="{{ p.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         {% else %}
                         <div class="w-full h-full flex items-center justify-center text-5xl text-muted/20">{{ p.subcategory.category.emoji }}</div>
                         {% endif %}

@@ -1,13 +1,34 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 from .models import Category, Subcategory, Product
+
+def search(request):
+    query = request.GET.get('q', '')
+    products = Product.objects.filter(is_active=True)
+    
+    if query:
+        products = products.filter(
+            Q(name__icontains=query) | 
+            Q(description__icontains=query) |
+            Q(subcategory__name__icontains=query) |
+            Q(subcategory__category__name__icontains=query)
+        )
+    
+    context = {
+        'products': products,
+        'query': query,
+    }
+    return render(request, 'catalog/search_results.html', context)
 
 
 def home(request):
     """Render the immersive home page with featured products."""
-    featured_products = Product.objects.filter(is_active=True, is_featured=True)[:12]
+    featured_products = Product.objects.select_related('subcategory__category').filter(is_active=True, is_featured=True)[:12]
+    elite_collection = Product.objects.select_related('subcategory__category').filter(is_active=True).order_by('?')[:8]
     categories = Category.objects.all()
     return render(request, 'home.html', {
         'featured_products': featured_products,
+        'elite_collection': elite_collection,
         'all_categories': categories,
         'cursor_emoji': '✨',
     })
@@ -72,17 +93,29 @@ def page_return(request):
 
 # ── Category views ──────────────────────────────────────────────────────────
 
+from django.core.paginator import Paginator
+
 def _category_view(request, cat_slug, template, cursor='👟'):
     """Helper to render category collection pages."""
     category   = get_object_or_404(Category, slug=cat_slug)
     subcats    = Subcategory.objects.filter(category=category)
     active_sub = request.GET.get('sub', '')
-    products   = Product.objects.filter(subcategory__category=category, is_active=True)
+    all_products = Product.objects.select_related('subcategory__category').filter(
+        subcategory__category=category, is_active=True
+    ).order_by('-created_at')
+    
     if active_sub:
-        products = products.filter(subcategory__slug=active_sub)
-    most_selling = Product.objects.filter(
+        all_products = all_products.filter(subcategory__slug=active_sub)
+    
+    # Pagination
+    paginator = Paginator(all_products, 12)
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+
+    most_selling = Product.objects.select_related('subcategory__category').filter(
         subcategory__category=category, is_active=True, is_featured=True
     )[:8]
+    
     return render(request, template, {
         'category':      category,
         'subcategories': subcats,
